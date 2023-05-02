@@ -1,4 +1,4 @@
-import User from '../../models/User'
+import User from '../../models/User.js'
 import bcrypt from 'bcrypt'
 
 export const register = async (req, res) => {
@@ -9,15 +9,17 @@ export const register = async (req, res) => {
     if(exist){
         return res.status(400).json({ error: 'User already exists' })
     }
-    const hashedPassword = bcrypt.hashSync(password)
+    const salt = await bcrypt.genSaltSync(10)
+    const hashedPassword = await bcrypt.hashSync(password, salt)
 
     try {
-        const user = User({
+        const createUser = User({
             name,
             email,
             password: hashedPassword,
         })
         await user.save()
+        res.status(200).send(createUser)
     } catch (err) {
         res.send(err)
     }
