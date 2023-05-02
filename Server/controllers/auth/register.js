@@ -12,15 +12,15 @@ export const register = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   try {
-    const createUser = User({
+    const user = User({
       name,
       email,
       password: hashedPassword
     });
 
-    createUser
+    user
       .save()
-      .then((result) => {
+      .then((user) => {
         res.status(200).send(result);
       })
       .catch((error) => {
