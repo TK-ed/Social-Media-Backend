@@ -5,6 +5,7 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+
 const app = express()
 
 // importing files
@@ -16,7 +17,7 @@ const db = process.env.MONG_URI
 
 // middlewares
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api', router)
 
 // routes

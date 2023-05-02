@@ -1,22 +1,24 @@
-import { User } from '../../models/userModel';
+import User from "../../models/User.js"
 import bcrypt from 'bcrypt'
 
 export const login = async (req, res) => {
 
-    const { username, password } = req.body
-    const exists = User.findOne({username: username})
+    const { email, password } = req.body
 
-    if(exists) {
-        try {
-            
-            // login
-            const salt = await bcrypt.genSalt(10)
-            const hash = await bcrypt.hash(password, salt)
+    try {
 
-            // checking
-            const check = bcrypt.compare(User.findOne(password), hash)
-        } catch (err) {
-            res.send(err)
+        // validate email
+        const user = await User.findOne({email: email})
+
+        if(!user) res.status(404).send('User not found')
+
+        if(user) {
+            const isMatch = await bcrypt.compare(password, user.password)
+            if(isMatch) res.status(200).send(user, isMatch)
         }
+        
+    } catch (err) {
+        res.status(500).send(err)
     }
-};
+
+}
