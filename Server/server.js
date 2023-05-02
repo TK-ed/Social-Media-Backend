@@ -16,8 +16,8 @@ const port = process.env.PORT
 const db = process.env.MONG_URI
 
 // middlewares
-app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
 app.use('/api', router)
 
 // routes
