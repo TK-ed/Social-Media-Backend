@@ -20,7 +20,7 @@ export const register = async (req, res) => {
 
     user
       .save()
-      .then((user) => {
+      .then((result) => {
         res.status(200).send(result);
       })
       .catch((error) => {
