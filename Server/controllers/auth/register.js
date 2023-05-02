@@ -9,13 +9,13 @@ export const register = async (req, res) => {
   }
   const salt = await bcrypt.genSalt(10);
   console.log(password);
-  const hashedPassword = await bcrypt.hashSync(password, salt);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   try {
     const createUser = User({
       name,
       email,
-      password: hashedPassword,
+      password: hashedPassword
     });
 
     createUser
