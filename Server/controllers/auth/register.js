@@ -29,4 +29,4 @@ export const register = async (req, res) => {
   } catch (err) {
     res.send(err);
   }
-};
+}
