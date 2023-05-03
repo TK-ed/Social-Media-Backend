@@ -10,6 +10,7 @@ export const register = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   console.log(password);
   const hashedPassword = await bcrypt.hash(password, salt);
+  console.log(hashedPassword);
 
   try {
     const user = User({
@@ -18,15 +19,10 @@ export const register = async (req, res) => {
       password: hashedPassword
     });
 
-    user
-      .save()
-      .then((result) => {
-        res.status(200).send(result);
-      })
-      .catch((error) => {
-        res.send(error);
-      });
+    user.save()
+    res.status(200).send(user)
   } catch (err) {
     res.send(err);
   }
+
 }

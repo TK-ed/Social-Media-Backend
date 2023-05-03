@@ -12,10 +12,12 @@ export const login = async (req, res) => {
 
         if(!user) res.status(404).send('User not found')
 
-        if(user) {
-            const isMatch = await bcrypt.compare(password, user.password)
-            if(isMatch) res.status(200).send(user, isMatch)
+        const isMatch = await bcrypt.compare(password, user.password)
+        if(!isMatch){
+            res.status(400).send('Invalid password')
+            return
         }
+        res.status(200).send('Login successful')
         
     } catch (err) {
         res.status(500).send(err)

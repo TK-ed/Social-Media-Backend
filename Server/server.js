@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 mongoose.connect(db)
     .then( () => {
         try {
-        
+
             // connecting port
             app.listen(port, () => {
                 console.log(`Connected to DB n listenin' on port ${port}`)
@@ -41,4 +41,3 @@ mongoose.connect(db)
         }
         
     })
-
