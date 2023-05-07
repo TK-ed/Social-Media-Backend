@@ -11,6 +11,9 @@ router.get('/', (req, res) => {
 
 // get routes
 router.get('/get', getUsers)
+// router.get('/login', (req, res) => {
+//     res.status(200).send('CORS working..')
+// })
 
 // post routes
 router.post('/register', register)

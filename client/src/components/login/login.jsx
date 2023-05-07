@@ -1,42 +1,36 @@
 import { useState } from 'react'
 import '../login/login.css'
 
-function login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    const response = await fetch('http://localhost:6969/api/login',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-  }
-
-}
-
-const signUpButton = document.getElementById('signUp');
-const signInButton = document.getElementById('signIn');
-const container = document.getElementById('container');
-
-signUpButton.addEventListener('click', () => {
-	container.classNameList.add("right-panel-active");
-});
-
-signInButton.addEventListener('click', () => {
-	container.classNameList.remove("right-panel-active");
-});
 
 const Login = () => {
+
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+  
+	const handleSubmit = async (event) => {
+	  console.log('All Clear!!!');
+	  event.preventDefault();
+	  const response = await fetch('http://localhost:6969/api/login', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ email, password }),
+	  });
+	//   console.log(response);
+	  const data = await response.json();
+	  response.send(data);
+	  setEmail(data);
+	  setPassword(data);
+	  // Redirect to protected route
+	};
+
+
     return(
       <div>
 
-<h2>Hola!!</h2>
+<h2>Wink!!</h2>
 <div className="container" id="container">
 	<div className="form-container sign-up-container">
-		<form action="#">
+		<form onSubmit={handleSubmit}>
 			<h1>Create Account</h1>
 			<div className="social-container">
 				<a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -44,14 +38,14 @@ const Login = () => {
 				<a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
+			<input type="text" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Name" />
+			<input type="email" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Email" />
 			<input type="password" placeholder="Password" />
 			<button>Sign Up</button>
 		</form>
 	</div>
 	<div className="form-container sign-in-container">
-		<form action="#">
+		<form onSubmit={handleSubmit}>
 			<h1>Sign in</h1>
 			<div className="social-container">
 				<a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -59,10 +53,10 @@ const Login = () => {
 				<a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
+			<input type="email" placeholder="Email" onChange={(event) => setEmail(event.target.value)} />
+			<input type="password" placeholder="Password" onChange={(event) => setPassword(event.target.value)} />
 			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
+			<button type='submit'>Sign In</button>
 		</form>
 	</div>
 	<div className="overlay-container">
